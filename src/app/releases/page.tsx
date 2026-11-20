@@ -12,7 +12,7 @@ export default async function ReleasesPage() {
 
   return (
     <section className="py-16">
-      <h1 className="text-4xl font-semibold tracking-tight">Releases</h1>
+      <h1 className="text-4xl font-black uppercase tracking-tight">Releases</h1>
       <p className="mt-3 max-w-xl text-muted">
         Singles, EPs and albums, newest first. Tap a link to listen on your
         favourite platform.

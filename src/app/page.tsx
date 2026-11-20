@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getArtists, getReleases } from "@/lib/data";
 import { ArtistCard, EmptyState, ReleaseCard } from "@/components/Cards";
+import { LogoMark } from "@/components/LogoMark";
 
 export default async function Home() {
   const [releases, artists] = await Promise.all([
@@ -10,40 +11,43 @@ export default async function Home() {
 
   return (
     <>
-      <section className="py-20 sm:py-28">
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent">
-          Independent music label
-        </p>
-        <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
-          New sounds from Studio Shivdev.
-        </h1>
-        <p className="mt-6 max-w-xl text-lg text-muted">
-          We find, record and release music by independent artists. Explore
-          our roster and listen to the latest releases.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link
-            href="/releases"
-            className="rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-ink hover:opacity-90"
-          >
-            Listen to releases
-          </Link>
-          <Link
-            href="/contact"
-            className="rounded-full border border-line px-5 py-2.5 text-sm font-semibold hover:border-foreground"
-          >
-            Send us your music
-          </Link>
+      <section className="grid items-center gap-12 py-16 sm:py-24 md:grid-cols-[1.15fr_1fr]">
+        <div>
+          <p className="text-sm font-bold uppercase tracking-[0.3em] text-accent">
+            Independent music label
+          </p>
+          <h1 className="mt-4 text-5xl font-black uppercase leading-[0.95] tracking-tight sm:text-7xl">
+            New sounds from Studio Shivdev
+          </h1>
+          <p className="mt-6 max-w-xl text-lg text-muted">
+            We find, record and release music by independent artists. Explore
+            our roster and listen to the latest releases.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href="/releases"
+              className="rounded-full bg-accent px-6 py-3 text-sm font-bold uppercase tracking-wider text-accent-ink hover:bg-foreground hover:text-background"
+            >
+              Listen to releases
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded-full border-2 border-foreground px-6 py-3 text-sm font-bold uppercase tracking-wider hover:border-accent hover:text-accent"
+            >
+              Send us your music
+            </Link>
+          </div>
         </div>
+        <LogoMark animated className="mx-auto w-full max-w-md md:max-w-none" />
       </section>
 
       <section className="py-10">
         <div className="flex items-end justify-between gap-4">
-          <h2 className="text-2xl font-semibold tracking-tight">
+          <h2 className="text-2xl font-black uppercase tracking-tight">
             Latest releases
           </h2>
           {releases.length > 0 && (
-            <Link href="/releases" className="text-sm text-muted hover:text-foreground">
+            <Link href="/releases" className="text-sm text-muted hover:text-accent">
               All releases →
             </Link>
           )}
@@ -67,8 +71,8 @@ export default async function Home() {
       {artists.length > 0 && (
         <section className="py-10">
           <div className="flex items-end justify-between gap-4">
-            <h2 className="text-2xl font-semibold tracking-tight">Artists</h2>
-            <Link href="/artists" className="text-sm text-muted hover:text-foreground">
+            <h2 className="text-2xl font-black uppercase tracking-tight">Artists</h2>
+            <Link href="/artists" className="text-sm text-muted hover:text-accent">
               All artists →
             </Link>
           </div>

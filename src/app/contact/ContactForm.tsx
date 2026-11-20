@@ -49,14 +49,14 @@ export function ContactForm() {
         </label>
       </div>
       {state.status === "error" && (
-        <p role="alert" className="text-sm text-red-400">
+        <p role="alert" className="text-sm text-accent">
           {state.message}
         </p>
       )}
       <button
         type="submit"
         disabled={pending}
-        className="self-start rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-accent-ink hover:opacity-90 disabled:opacity-60"
+        className="self-start rounded-full bg-accent px-6 py-3 text-sm font-bold uppercase tracking-wider text-accent-ink hover:bg-foreground hover:text-background disabled:opacity-60"
       >
         {pending ? "Sending…" : "Send message"}
       </button>

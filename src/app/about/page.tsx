@@ -25,16 +25,28 @@ const values = [
 export default function AboutPage() {
   return (
     <section className="py-16">
-      <h1 className="text-4xl font-semibold tracking-tight">About</h1>
-      <div className="mt-6 max-w-2xl space-y-4 text-lg leading-relaxed text-muted">
-        <p>
-          Studio Shivdev is an independent music label built to give new
-          artists a home: a place to record, release and grow an audience.
-        </p>
-        <p>
-          We work closely with a small roster, from the first demo to the
-          release day, and stay with our artists for the long run.
-        </p>
+      <div className="grid items-center gap-12 md:grid-cols-[1.2fr_1fr]">
+        <div>
+          <h1 className="text-4xl font-black uppercase tracking-tight">About</h1>
+          <div className="mt-6 max-w-2xl space-y-4 text-lg leading-relaxed text-muted">
+            <p>
+              Studio Shivdev is an independent music label built to give new
+              artists a home: a place to record, release and grow an audience.
+            </p>
+            <p>
+              We work closely with a small roster, from the first demo to the
+              release day, and stay with our artists for the long run.
+            </p>
+          </div>
+        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/brand/studio-shivdev-logo.png"
+          alt="Studio Shivdev"
+          width={1110}
+          height={850}
+          className="mx-auto w-full max-w-sm"
+        />
       </div>
 
       <div className="mt-14 grid gap-6 sm:grid-cols-3">
@@ -50,7 +62,7 @@ export default function AboutPage() {
       </div>
 
       <div className="mt-14 rounded-2xl bg-surface-2 p-8">
-        <h2 className="text-2xl font-semibold tracking-tight">
+        <h2 className="text-2xl font-black uppercase tracking-tight">
           Making music?
         </h2>
         <p className="mt-2 max-w-xl text-muted">
@@ -58,7 +70,7 @@ export default function AboutPage() {
         </p>
         <Link
           href="/contact"
-          className="mt-6 inline-block rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-ink hover:opacity-90"
+          className="mt-6 inline-block rounded-full bg-accent px-6 py-3 text-sm font-bold uppercase tracking-wider text-accent-ink hover:bg-foreground hover:text-background"
         >
           Get in touch
         </Link>

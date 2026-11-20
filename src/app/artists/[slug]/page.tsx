@@ -64,7 +64,7 @@ async function ArtistDetails({ params }: Pick<PageProps<"/artists/[slug]">, "par
           </div>
         )}
         <div>
-          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+          <h1 className="text-4xl font-black uppercase tracking-tight sm:text-5xl">
             {artist.name}
           </h1>
           {artist.bio && (
@@ -100,7 +100,7 @@ async function ArtistDetails({ params }: Pick<PageProps<"/artists/[slug]">, "par
       </div>
 
       <section className="mt-16">
-        <h2 className="text-2xl font-semibold tracking-tight">Releases</h2>
+        <h2 className="text-2xl font-black uppercase tracking-tight">Releases</h2>
         <div className="mt-6">
           {releases.length > 0 ? (
             <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
@@ -123,7 +123,7 @@ async function ArtistDetails({ params }: Pick<PageProps<"/artists/[slug]">, "par
 export default function ArtistPage(props: PageProps<"/artists/[slug]">) {
   return (
     <section className="py-16">
-      <Link href="/artists" className="text-sm text-muted hover:text-foreground">
+      <Link href="/artists" className="text-sm text-muted hover:text-accent">
         ← All artists
       </Link>
       <div className="mt-8">

@@ -55,7 +55,7 @@ export function ReleaseCard({ release }: { release: Release }) {
       {release.artist && (
         <Link
           href={`/artists/${release.artist.slug}`}
-          className="text-sm text-muted hover:text-foreground"
+          className="text-sm text-muted hover:text-accent"
         >
           {release.artist.name}
         </Link>

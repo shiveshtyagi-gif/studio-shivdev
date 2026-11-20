@@ -1,15 +1,21 @@
 @import "tailwindcss";
 
-/* Studio Shivdev palette: deep night background, warm saffron accent. */
+/*
+ * Studio Shivdev brand: three colours only.
+ *   Red   #E91D24 (from the logo)
+ *   Black #000000
+ *   White #FFFFFF
+ * Greys below are white at lower opacity on black, not extra colours.
+ */
 :root {
-  --background: #0b0a10;
-  --surface: #15131d;
-  --surface-2: #1d1a28;
-  --border: #2a2638;
-  --foreground: #f3f0ea;
-  --muted: #a39db3;
-  --accent: #f2a541;
-  --accent-ink: #1a1206;
+  --background: #000000;
+  --foreground: #ffffff;
+  --accent: #e91d24;
+  --accent-ink: #ffffff;
+  --muted: rgb(255 255 255 / 0.68);
+  --border: rgb(255 255 255 / 0.14);
+  --surface: rgb(255 255 255 / 0.05);
+  --surface-2: rgb(255 255 255 / 0.1);
 }
 
 @theme inline {
@@ -37,4 +43,26 @@ body {
 ::selection {
   background: var(--accent);
   color: var(--accent-ink);
+}
+
+/* Gentle "playing" motion for the large waveform on the home page. */
+.wave-bar {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wave 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes wave {
+  from {
+    transform: scaleY(0.8);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-bar {
+    animation: none;
+  }
 }
