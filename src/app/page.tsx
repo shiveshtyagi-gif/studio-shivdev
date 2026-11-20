@@ -13,10 +13,10 @@ export default async function Home() {
     <>
       <section className="grid items-center gap-12 py-16 sm:py-24 md:grid-cols-[1.15fr_1fr]">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.3em] text-accent">
+          <p className="ds-eyebrow">
             Independent music label
           </p>
-          <h1 className="mt-4 text-5xl font-black uppercase leading-[0.95] tracking-tight sm:text-7xl">
+          <h1 className="mt-4 ds-display">
             New sounds from Studio Shivdev
           </h1>
           <p className="mt-6 max-w-xl text-lg text-muted">
@@ -26,13 +26,13 @@ export default async function Home() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/releases"
-              className="rounded-full bg-accent px-6 py-3 text-sm font-bold uppercase tracking-wider text-accent-ink hover:bg-foreground hover:text-background"
+              className="ds-btn-primary"
             >
               Listen to releases
             </Link>
             <Link
               href="/contact"
-              className="rounded-full border-2 border-foreground px-6 py-3 text-sm font-bold uppercase tracking-wider hover:border-accent hover:text-accent"
+              className="ds-btn-secondary"
             >
               Send us your music
             </Link>
@@ -43,7 +43,7 @@ export default async function Home() {
 
       <section className="py-10">
         <div className="flex items-end justify-between gap-4">
-          <h2 className="text-2xl font-black uppercase tracking-tight">
+          <h2 className="ds-h2">
             Latest releases
           </h2>
           {releases.length > 0 && (
@@ -71,7 +71,7 @@ export default async function Home() {
       {artists.length > 0 && (
         <section className="py-10">
           <div className="flex items-end justify-between gap-4">
-            <h2 className="text-2xl font-black uppercase tracking-tight">Artists</h2>
+            <h2 className="ds-h2">Artists</h2>
             <Link href="/artists" className="text-sm text-muted hover:text-accent">
               All artists →
             </Link>

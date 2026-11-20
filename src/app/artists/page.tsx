@@ -12,7 +12,7 @@ export default async function ArtistsPage() {
 
   return (
     <section className="py-16">
-      <h1 className="text-4xl font-black uppercase tracking-tight">Artists</h1>
+      <h1 className="ds-h1">Artists</h1>
       <p className="mt-3 max-w-xl text-muted">
         The voices and producers behind Studio Shivdev.
       </p>

@@ -65,10 +65,10 @@ export default async function DevGallery() {
 
   return (
     <section className="py-12">
-      <p className="text-sm font-bold uppercase tracking-[0.3em] text-accent">
+      <p className="ds-eyebrow">
         For the team
       </p>
-      <h1 className="mt-3 text-4xl font-black uppercase tracking-tight">
+      <h1 className="mt-3 ds-h1">
         Dev gallery
       </h1>
       <p className="mt-3 max-w-2xl text-muted">
@@ -81,7 +81,7 @@ export default async function DevGallery() {
           <a
             key={s.path}
             href={`#${s.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-            className="rounded-full border border-line px-3 py-1 hover:border-accent hover:text-accent"
+            className="ds-chip"
           >
             {s.name}
           </a>
@@ -96,7 +96,7 @@ export default async function DevGallery() {
             className="scroll-mt-28 border-t border-line pt-6"
           >
             <header className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-              <h2 className="text-xl font-black uppercase tracking-tight">{s.name}</h2>
+              <h2 className="ds-h3">{s.name}</h2>
               <a href={s.path} target="_blank" className="font-mono text-sm text-muted hover:text-accent">
                 {s.path} ↗
               </a>

@@ -1,0 +1,137 @@
+/*
+ * Studio Shivdev design system — the single source of truth for colours,
+ * type and shared components. Documented in DESIGN.md at the project root.
+ * Imported once from globals.css. Change a token here and the whole site
+ * follows; don't hard-code colours in components.
+ */
+
+/* ---------------------------------------------------------------
+ * 1. Tokens
+ * Three brand colours only: logo red, black, white. Every grey is
+ * white at reduced opacity on black, not an extra colour.
+ * ------------------------------------------------------------- */
+:root {
+  --brand-red: #e91d24;
+  --brand-black: #000000;
+  --brand-white: #ffffff;
+
+  --background: var(--brand-black);
+  --foreground: var(--brand-white);
+  --accent: var(--brand-red);
+  --accent-ink: var(--brand-white); /* text on red */
+  --muted: rgb(255 255 255 / 0.68); /* secondary text */
+  --border: rgb(255 255 255 / 0.14); /* hairlines, card borders */
+  --surface: rgb(255 255 255 / 0.05); /* cards, inputs */
+  --surface-2: rgb(255 255 255 / 0.1); /* raised panels, placeholders */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-muted: var(--muted);
+  --color-line: var(--border);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ---------------------------------------------------------------
+ * 2. Base
+ * ------------------------------------------------------------- */
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* ---------------------------------------------------------------
+ * 3. Components (prefix ds-). Combine with layout utilities such as
+ *    mt-6 or self-start, never with colour or type utilities.
+ * ------------------------------------------------------------- */
+@layer components {
+  /* Type */
+  .ds-eyebrow {
+    @apply text-sm font-bold uppercase tracking-[0.3em] text-accent;
+  }
+  .ds-display {
+    @apply text-5xl leading-[0.95] font-black uppercase tracking-tight sm:text-7xl;
+  }
+  .ds-h1 {
+    @apply text-4xl font-black uppercase tracking-tight;
+  }
+  .ds-h2 {
+    @apply text-2xl font-black uppercase tracking-tight;
+  }
+  .ds-h3 {
+    @apply text-xl font-black uppercase tracking-tight;
+  }
+  .ds-lead {
+    @apply text-lg text-muted;
+  }
+
+  /* Buttons: pill-shaped like the logo's bars */
+  .ds-btn-primary,
+  .ds-btn-secondary {
+    @apply inline-block rounded-full px-6 py-3 text-sm font-bold uppercase tracking-wider transition-colors disabled:opacity-60;
+  }
+  .ds-btn-primary {
+    @apply bg-accent text-accent-ink hover:bg-foreground hover:text-background;
+  }
+  .ds-btn-secondary {
+    @apply border-2 border-foreground hover:border-accent hover:text-accent;
+  }
+
+  /* Chips: small pill links (filters, socials, jump links) */
+  .ds-chip {
+    @apply inline-block rounded-full border border-line px-4 py-1.5 text-sm transition-colors hover:border-accent hover:text-accent;
+  }
+
+  /* Surfaces */
+  .ds-card {
+    @apply rounded-2xl border border-line bg-surface p-6;
+  }
+  .ds-panel {
+    @apply rounded-2xl bg-surface-2 p-8;
+  }
+
+  /* Form fields */
+  .ds-input {
+    @apply w-full rounded-xl border border-line bg-surface px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none;
+  }
+}
+
+/* ---------------------------------------------------------------
+ * 4. Motion
+ * ------------------------------------------------------------- */
+/* Gentle "playing" motion for the large waveform (LogoMark animated). */
+.wave-bar {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wave 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes wave {
+  from {
+    transform: scaleY(0.8);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-bar {
+    animation: none;
+  }
+}
