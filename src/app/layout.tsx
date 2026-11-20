@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // The site's own domain, so link previews and canonical URLs use it.
+  metadataBase: new URL("https://www.studioshivdev.com"),
+  alternates: { canonical: "./" },
   title: {
     default: "Studio Shivdev · Independent music label",
     template: "%s · Studio Shivdev",

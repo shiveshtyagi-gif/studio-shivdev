@@ -3,6 +3,7 @@
 The Studio Shivdev website uses three colours (logo red, black and white), heavy uppercase type taken from the wordmark, and pill shapes taken from the waveform logo.
 
 - **Source of truth:** [`src/app/design-system.css`](src/app/design-system.css), which holds the tokens, base styles, components and motion.
+- **Live site:** https://www.studioshivdev.com (studioshivdev.com redirects there; DNS at GoDaddy points to Vercel).
 - **See it live:** `/dev/gallery` shows every screen at desktop and phone width.
 - **Review and comment:** the [Studio Shivdev Design System](https://claude.ai/artifact/EvmYKFfi8QFcob6uXxgHBA) gallery on claude.ai shows the tokens, type, logos and every component with a live preview. It's private until shared. Changes made there are not copied into the code automatically: bring them back to `design-system.css` and this file.
 
