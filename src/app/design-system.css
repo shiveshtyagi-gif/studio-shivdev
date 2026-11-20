@@ -55,6 +55,30 @@ body {
   color: var(--accent-ink);
 }
 
+/* Keyboard focus: a solid 2px white ring with a gap, on every control.
+ * White on black is 21:1, and the gap keeps it clear of red fills. */
+:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 3px;
+}
+
+/* Screen-reader-only text that appears when focused (skip link). */
+.ds-skip {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 50;
+  border-radius: 9999px;
+  background: var(--foreground);
+  color: var(--background);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.ds-skip:focus {
+  top: 1rem;
+}
+
 /* ---------------------------------------------------------------
  * 3. Components (prefix ds-). Combine with layout utilities such as
  *    mt-6 or self-start, never with colour or type utilities.
@@ -94,7 +118,13 @@ body {
 
   /* Chips: small pill links (filters, socials, jump links) */
   .ds-chip {
-    @apply inline-block rounded-full border border-line px-4 py-1.5 text-sm transition-colors hover:border-accent hover:text-accent;
+    @apply inline-flex min-h-11 items-center gap-1 rounded-full border border-line px-4 text-sm transition-colors hover:border-accent hover:text-accent;
+  }
+
+  /* Text links in nav and "All releases →": 44px tall tap area,
+   * same look as plain text. */
+  .ds-tap {
+    @apply inline-flex min-h-11 items-center;
   }
 
   /* Surfaces */
@@ -107,7 +137,10 @@ body {
 
   /* Form fields */
   .ds-input {
-    @apply w-full rounded-xl border border-line bg-surface px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none;
+    @apply w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-foreground placeholder:text-muted focus:border-accent aria-invalid:border-accent;
+  }
+  .ds-field-error {
+    @apply text-sm text-accent;
   }
 }
 
@@ -118,7 +151,9 @@ body {
 .wave-bar {
   transform-box: fill-box;
   transform-origin: center;
-  animation: wave 2.4s ease-in-out infinite alternate;
+  /* 3 swings (about 7s), ending at full height, then it rests: moving
+   * content must stop on its own or offer a pause (WCAG 2.2.2). */
+  animation: wave 2.4s ease-in-out 3 alternate;
 }
 
 @keyframes wave {

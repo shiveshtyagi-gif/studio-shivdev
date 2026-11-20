@@ -11,7 +11,7 @@ export default async function Home() {
 
   return (
     <>
-      <section className="grid items-center gap-12 py-16 sm:py-24 md:grid-cols-[1.15fr_1fr]">
+      <section className="grid items-center gap-8 py-10 sm:py-24 md:grid-cols-[1.15fr_1fr] md:gap-12">
         <div>
           <p className="ds-eyebrow">
             Independent music label
@@ -38,7 +38,7 @@ export default async function Home() {
             </Link>
           </div>
         </div>
-        <LogoMark animated className="mx-auto w-full max-w-md md:max-w-none" />
+        <LogoMark animated className="order-first w-40 sm:w-56 md:order-none md:mx-auto md:w-full" />
       </section>
 
       <section className="py-10">
@@ -47,7 +47,7 @@ export default async function Home() {
             Latest releases
           </h2>
           {releases.length > 0 && (
-            <Link href="/releases" className="text-sm text-muted hover:text-accent">
+            <Link href="/releases" className="ds-tap text-sm text-muted hover:text-accent">
               All releases →
             </Link>
           )}
@@ -72,7 +72,7 @@ export default async function Home() {
         <section className="py-10">
           <div className="flex items-end justify-between gap-4">
             <h2 className="ds-h2">Artists</h2>
-            <Link href="/artists" className="text-sm text-muted hover:text-accent">
+            <Link href="/artists" className="ds-tap text-sm text-muted hover:text-accent">
               All artists →
             </Link>
           </div>

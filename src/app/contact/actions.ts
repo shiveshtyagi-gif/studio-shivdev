@@ -2,9 +2,17 @@
 
 import { supabase } from "@/lib/supabase";
 
+export type Field = "name" | "email" | "message";
+
 export type ContactState = {
   status: "idle" | "success" | "error";
-  message?: string;
+  /** One message per field that needs fixing, shown under that field. */
+  errors?: Partial<Record<Field, string>>;
+  /** A problem that isn't about one field (e.g. the database is down). */
+  formError?: string;
+  /** What was typed, so the form can show it again after an error
+   *  (React clears a form after its action runs). */
+  values?: Record<Field, string>;
 };
 
 export async function sendMessage(
@@ -16,32 +24,33 @@ export async function sendMessage(
     return { status: "success" };
   }
 
-  const name = String(formData.get("name") ?? "").trim();
-  const email = String(formData.get("email") ?? "").trim();
-  const message = String(formData.get("message") ?? "").trim();
+  const values = {
+    name: String(formData.get("name") ?? "").trim(),
+    email: String(formData.get("email") ?? "").trim(),
+    message: String(formData.get("message") ?? "").trim(),
+  };
 
-  if (!name || name.length > 100) {
-    return { status: "error", message: "Please enter your name." };
-  }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 200) {
-    return { status: "error", message: "Please enter a valid email address." };
-  }
-  if (!message || message.length > 5000) {
-    return {
-      status: "error",
-      message: "Please write a message (up to 5,000 characters).",
-    };
+  const errors: ContactState["errors"] = {};
+  if (!values.name) errors.name = "Enter your name.";
+  else if (values.name.length > 100) errors.name = "Keep your name under 100 characters.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email) || values.email.length > 200)
+    errors.email = "Enter an email address like name@example.com.";
+  if (!values.message) errors.message = "Write a message, or paste a link to your music.";
+  else if (values.message.length > 5000)
+    errors.message = `Shorten your message to 5,000 characters (it's ${values.message.length.toLocaleString("en-IN")}).`;
+
+  if (Object.keys(errors).length > 0) {
+    return { status: "error", errors, values };
   }
 
-  const { error } = await supabase
-    .from("contact_messages")
-    .insert({ name, email, message });
+  const { error } = await supabase.from("contact_messages").insert(values);
 
   if (error) {
     console.error("sendMessage:", error.message);
     return {
       status: "error",
-      message: "Something went wrong. Please try again in a moment.",
+      formError: "Your message couldn't be sent. Please try again in a moment.",
+      values,
     };
   }
   return { status: "success" };

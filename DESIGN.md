@@ -95,14 +95,15 @@ Use the `ds-` classes from `design-system.css`. Add layout utilities next to the
 | --- | --- | --- |
 | Primary button | `ds-btn-primary` | Red pill, white bold uppercase text. Turns white with black text on hover. One per view. |
 | Secondary button | `ds-btn-secondary` | White 2px outline pill. Turns red on hover. |
-| Chip | `ds-chip` | Small outlined pill for socials, filters and jump links |
+| Chip | `ds-chip` | Small outlined pill for socials, filters and jump links. 44px tall. |
+| Tap area | `ds-tap` | Gives a plain text link (nav, "All releases →", "← All artists") a 44px-tall tap area without changing its look |
 | Card | `ds-card` | Faint surface with hairline border, 24px padding |
 | Panel | `ds-panel` | Brighter surface for call-to-action blocks, 32px padding |
-| Text input / textarea | `ds-input` | Red border on focus |
-| Release card | `ReleaseCard` in `src/components/Cards.tsx` | Square cover, title, artist link, type · date, platform links in red |
+| Text input / textarea | `ds-input` | 16px text (stops phones zooming in). Red border on focus and when invalid (`aria-invalid`). Put a `ds-field-error` message under the field, linked with `aria-describedby`. |
+| Release card | `ReleaseCard` in `src/components/Cards.tsx` | Square cover, title, artist link, type · date, platform links in red. The cover and title open the first platform. Pass `as="h2"` when the page has no `h2` above the grid. |
 | Artist card | `ArtistCard` (same file) | Circular photo and name. The name turns red on hover. |
 | Empty state | `EmptyState` (same file) | Dashed border box, shown when a list has no items |
-| Header / footer | `SiteHeader.tsx`, `SiteFooter.tsx` | Logo lockup and uppercase nav. Links turn red on hover. |
+| Header / footer | `SiteHeader.tsx`, `SiteNav.tsx`, `SiteFooter.tsx` | 64px header with the logo lockup. Uppercase nav from 768px up; a Menu button with a drop-down below that. The current page is white with a red underline (`aria-current="page"`). Links turn red on hover. |
 
 **Example**
 
@@ -126,7 +127,8 @@ Use the `ds-` classes from `design-system.css`. Add layout utilities next to the
 
 ## 7. Motion
 
-- The hero waveform's bars rise and fall gently (`.wave-bar`, 2.4s, scale 0.8 → 1).
+- The hero waveform's bars rise and fall gently three times (`.wave-bar`, 2.4s each, scale 0.8 → 1), then rest at full height. Moving content must stop on its own or offer a pause.
+- Release covers grow 3% on hover (motion-safe only).
 - Colour changes on hover use `transition-colors`. There are no other animations.
 - All motion stops for people who turn on **Reduce motion**, via `prefers-reduced-motion`.
 
@@ -135,8 +137,12 @@ Use the `ds-` classes from `design-system.css`. Add layout utilities next to the
 ## 8. Accessibility checklist
 
 - Every image has `alt` text. The decorative logo mark is `aria-hidden`.
-- Form fields have visible labels. Errors use `role="alert"`, and success uses `role="status"`.
-- Focus is visible: inputs get a red border, and links and buttons keep the browser focus ring.
+- Form fields have visible labels, and "All fields are required." sits above the form. Each error appears under its field, the field is marked invalid, and focus moves to the first one. Success uses `role="status"` and takes focus.
+- Focus is visible everywhere: a solid 2px white ring with a 3px gap (`:focus-visible` in `design-system.css`).
+- Every page starts with a "Skip to content" link, shown when focused.
+- Tap targets are at least 44px tall (`ds-tap`, `ds-chip`, buttons); platform links in release cards are at least 32px.
+- Links that open a new tab show ↗ and say "(opens in new tab)" to screen readers (`NewTabHint`).
+- Headings never skip a level.
 - Keep red text at 14px or larger. Don't put body paragraphs in red.
 
 ---

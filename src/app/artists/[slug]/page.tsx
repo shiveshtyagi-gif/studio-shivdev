@@ -8,7 +8,7 @@ import {
   getReleasesByArtist,
   spotifyEmbedUrl,
 } from "@/lib/data";
-import { EmptyState, ReleaseCard } from "@/components/Cards";
+import { EmptyState, NewTabHint, ReleaseCard } from "@/components/Cards";
 
 // Cache Components needs at least one slug to prerender. Until the first
 // artist is added, a placeholder slug prerenders the "not found" page.
@@ -83,6 +83,7 @@ async function ArtistDetails({ params }: Pick<PageProps<"/artists/[slug]">, "par
                   className="ds-chip"
                 >
                   {s.label}
+                  <NewTabHint />
                 </a>
               ))}
             </div>
@@ -120,14 +121,30 @@ async function ArtistDetails({ params }: Pick<PageProps<"/artists/[slug]">, "par
   );
 }
 
+/** Placeholder in the shape of the artist page while it loads. */
+function ArtistSkeleton() {
+  const block = "rounded-2xl bg-surface-2 motion-safe:animate-pulse";
+  return (
+    <div role="status" className="grid gap-10 md:grid-cols-[minmax(0,320px)_1fr] md:items-start">
+      <span className="sr-only">Loading artist</span>
+      <div aria-hidden className={`aspect-square w-full ${block}`} />
+      <div aria-hidden className="flex flex-col gap-4">
+        <div className={`h-12 w-2/3 ${block}`} />
+        <div className={`h-4 w-full ${block}`} />
+        <div className={`h-4 w-5/6 ${block}`} />
+      </div>
+    </div>
+  );
+}
+
 export default function ArtistPage(props: PageProps<"/artists/[slug]">) {
   return (
     <section className="py-16">
-      <Link href="/artists" className="text-sm text-muted hover:text-accent">
+      <Link href="/artists" className="ds-tap text-sm text-muted hover:text-accent">
         ← All artists
       </Link>
-      <div className="mt-8">
-        <Suspense fallback={<p className="text-muted">Loading artist…</p>}>
+      <div className="mt-6">
+        <Suspense fallback={<ArtistSkeleton />}>
           <ArtistDetails params={props.params} />
         </Suspense>
       </div>

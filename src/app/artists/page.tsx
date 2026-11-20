@@ -20,7 +20,7 @@ export default async function ArtistsPage() {
         {artists.length > 0 ? (
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-4">
             {artists.map((a) => (
-              <ArtistCard key={a.id} artist={a} />
+              <ArtistCard key={a.id} artist={a} as="h2" />
             ))}
           </div>
         ) : (

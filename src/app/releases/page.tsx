@@ -21,7 +21,7 @@ export default async function ReleasesPage() {
         {releases.length > 0 ? (
           <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
             {releases.map((r) => (
-              <ReleaseCard key={r.id} release={r} />
+              <ReleaseCard key={r.id} release={r} as="h2" />
             ))}
           </div>
         ) : (

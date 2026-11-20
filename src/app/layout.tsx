@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -27,6 +27,12 @@ export const metadata: Metadata = {
   },
 };
 
+// Black browser bar on phones, to match the site.
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  colorScheme: "dark",
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -34,8 +40,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">
+        <a href="#main" className="ds-skip">
+          Skip to content
+        </a>
         <SiteHeader />
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
+        <main
+          id="main"
+          tabIndex={-1}
+          className="mx-auto w-full max-w-6xl flex-1 px-4 outline-none sm:px-6"
+        >
           {children}
         </main>
         <SiteFooter />
