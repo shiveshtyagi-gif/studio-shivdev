@@ -47,6 +47,16 @@ create table if not exists contact_messages (
 );
 
 -- ---------------------------------------------------------------
+-- API access: the website (anon / authenticated roles) may read
+-- artists and releases and add contact messages. RLS below adds
+-- the row-level rules on top of these.
+-- ---------------------------------------------------------------
+
+revoke all on artists, releases, contact_messages from anon, authenticated;
+grant select on artists, releases to anon, authenticated;
+grant insert on contact_messages to anon, authenticated;
+
+-- ---------------------------------------------------------------
 -- Row Level Security: who can read or write each table
 -- ---------------------------------------------------------------
 
