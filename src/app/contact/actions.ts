@@ -1,5 +1,6 @@
 "use server";
 
+import { emailContactMessage } from "@/lib/mail";
 import { supabase } from "@/lib/supabase";
 
 export type Field = "name" | "email" | "message";
@@ -43,10 +44,15 @@ export async function sendMessage(
     return { status: "error", errors, values };
   }
 
-  const { error } = await supabase.from("contact_messages").insert(values);
+  // Keep a copy in Supabase and email it to connect@studioshivdev.com.
+  // The message counts as sent if either one works.
+  const [{ error }, emailed] = await Promise.all([
+    supabase.from("contact_messages").insert(values),
+    emailContactMessage(values),
+  ]);
 
-  if (error) {
-    console.error("sendMessage:", error.message);
+  if (error) console.error("sendMessage:", error.message);
+  if (error && !emailed) {
     return {
       status: "error",
       formError: "Your message couldn't be sent. Please try again in a moment.",
