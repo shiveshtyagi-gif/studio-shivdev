@@ -211,6 +211,27 @@ body {
   transform-origin: center;
   /* 3 swings (about 7s), then it rests (WCAG 2.2.2). */
   animation: wave 2.4s ease-in-out 3 alternate;
+  animation-delay: var(--wave-delay, 0s);
+}
+
+/* Header logo: on hover or keyboard focus, a quick left-to-right ripple
+ * runs through the bars once, then they settle at full height. */
+@media (prefers-reduced-motion: no-preference) {
+  .ds-logo-link:hover .wave-bar,
+  .ds-logo-link:focus-visible .wave-bar {
+    animation: wave-ripple 420ms ease-in-out 1;
+    animation-delay: calc(var(--wave-i, 0) * 35ms);
+  }
+}
+
+@keyframes wave-ripple {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.55);
+  }
 }
 
 @keyframes wave {

@@ -43,7 +43,16 @@ export function LogoMark({
           rx={W / 2}
           fill="var(--brand-red)"
           className={animated ? "wave-bar" : undefined}
-          style={animated ? { animationDelay: `${(i % 5) * -0.23}s` } : undefined}
+          // --wave-delay staggers the load animation; --wave-i orders the
+          // left-to-right ripple on hover (see .ds-logo-link in design-system.css).
+          style={
+            animated
+              ? ({
+                  "--wave-delay": `${(i % 5) * -0.23}s`,
+                  "--wave-i": i,
+                } as React.CSSProperties)
+              : undefined
+          }
         />
       ))}
     </svg>

@@ -6,7 +6,7 @@
 > - **Pages:** white pages, with black `ds-dark` and light-grey `ds-tile-grey` full-width tiles.
 > - **Type:** big centred semibold headlines (`ds-display` 80px, `ds-headline` 56px, `ds-subhead`) in sentence case ending with a full stop ("Releases."), set in the system font (Geist as fallback).
 > - **Links and buttons:** chevron links (`ds-link`, "Listen ›") and rounded pill buttons.
-> - **Navigation:** a thin 48px translucent nav with small links, and a large-type phone menu.
+> - **Navigation:** a thin 48px translucent nav with small links, and a large-type phone menu. The header logo's waveform plays three gentle swings on load, then a quick left-to-right ripple on hover or keyboard focus (off with Reduce motion).
 > - **Components:** rounded cards (18px for covers, 28px for artists) and a swipeable artist row (`ds-scroller`).
 > - **Footer:** a quiet grey footer in 12px type, with a hairline on top and the email address.
 > - **Email:** the public address is `connect@studioshivdev.com` (`CONTACT_EMAIL` in `src/lib/nav.ts`). It appears as a mailto link on the Contact page and in the footer.
