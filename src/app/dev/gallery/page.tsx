@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { getArtists } from "@/lib/data";
 
 // Dev gallery: every screen of the site side by side at desktop and phone
-// width. Only available while running `npm run dev`; production returns 404.
+// width. Published on the live site at /dev/gallery, but not linked from
+// any page and hidden from search engines.
 
 export const metadata: Metadata = {
   title: "Dev gallery",
@@ -50,8 +50,6 @@ function Frame({
 }
 
 export default async function DevGallery() {
-  if (process.env.NODE_ENV !== "development") notFound();
-
   const artists = await getArtists();
   const screens: Screen[] = [
     { name: "Home", path: "/" },
@@ -68,14 +66,14 @@ export default async function DevGallery() {
   return (
     <section className="py-12">
       <p className="text-sm font-bold uppercase tracking-[0.3em] text-accent">
-        Development only
+        For the team
       </p>
       <h1 className="mt-3 text-4xl font-black uppercase tracking-tight">
         Dev gallery
       </h1>
       <p className="mt-3 max-w-2xl text-muted">
         Every screen at desktop and phone width, with live data from Supabase.
-        This page returns 404 on the live site.
+        This page isn&apos;t linked from the site or shown in search results.
       </p>
 
       <nav aria-label="Screens" className="mt-6 flex flex-wrap gap-2 text-sm">
