@@ -1,5 +1,18 @@
 # Studio Shivdev design system
 
+> **This is the `apple-style` branch: an alternative design, not live on studioshivdev.com.**
+> It keeps the brand (logo, red/black/white) but uses a light, product-site layout:
+>
+> - **Pages:** white pages, with black `ds-dark` and light-grey `ds-tile-grey` full-width tiles.
+> - **Type:** big centred semibold headlines (`ds-display` 80px, `ds-headline` 56px, `ds-subhead`) in sentence case ending with a full stop ("Releases."), set in the system font (Geist as fallback).
+> - **Links and buttons:** chevron links (`ds-link`, "Listen ›") and rounded pill buttons.
+> - **Navigation:** a thin 48px translucent nav with small links, and a large-type phone menu.
+> - **Components:** rounded cards (18px for covers, 28px for artists) and a swipeable artist row (`ds-scroller`).
+> - **Footer:** a quiet grey footer in 12px type.
+> - **Colour tokens:** text is near-black (black at 88%), and greys are black at reduced opacity. Links and buttons on white use a slightly deeper red, `#d0161d` (5.5:1), so small text passes contrast. Button fills use it in every theme (`--accent-fill`); the logo mark stays the exact logo red.
+>
+> The sections below describe the dark design on `main`. On this branch, `src/app/design-system.css` is the source of truth.
+
 The Studio Shivdev website uses three colours (logo red, black and white), heavy uppercase type taken from the wordmark, and pill shapes taken from the waveform logo.
 
 - **Source of truth:** [`src/app/design-system.css`](src/app/design-system.css), which holds the tokens, base styles, components and motion.

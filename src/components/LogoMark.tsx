@@ -41,7 +41,7 @@ export function LogoMark({
           width={W}
           height={y1 - y0}
           rx={W / 2}
-          fill="var(--accent)"
+          fill="var(--brand-red)"
           className={animated ? "wave-bar" : undefined}
           style={animated ? { animationDelay: `${(i % 5) * -0.23}s` } : undefined}
         />

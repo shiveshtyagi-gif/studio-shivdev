@@ -11,26 +11,27 @@ export default async function ReleasesPage() {
   const releases = await getReleases();
 
   return (
-    <section className="py-16">
-      <h1 className="ds-h1">Releases</h1>
-      <p className="mt-3 max-w-xl text-muted">
-        Singles, EPs and albums, newest first. Tap a link to listen on your
-        favourite platform.
-      </p>
-      <div className="mt-10">
+    <>
+      <section className="ds-tile pb-8 sm:pb-10">
+        <h1 className="ds-display">Releases.</h1>
+        <p className="mx-auto mt-4 max-w-xl ds-lead">
+          Singles, EPs and albums, newest first. Tap a cover to listen.
+        </p>
+      </section>
+      <section className="ds-container pb-20">
         {releases.length > 0 ? (
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
             {releases.map((r) => (
               <ReleaseCard key={r.id} release={r} as="h2" />
             ))}
           </div>
         ) : (
           <EmptyState
-            title="First releases coming soon"
+            title="First releases coming soon."
             body="Our debut releases are on the way. Check back shortly."
           />
         )}
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

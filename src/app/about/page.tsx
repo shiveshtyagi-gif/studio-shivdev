@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Chevron } from "@/components/Cards";
 
 export const metadata: Metadata = {
   title: "About",
@@ -9,72 +10,69 @@ export const metadata: Metadata = {
 // Placeholder copy: replace with the label's own story.
 const values = [
   {
-    title: "Artists first",
+    title: "Artists first.",
     body: "Fair deals, clear terms, and artists who keep their creative voice.",
   },
   {
-    title: "Made with care",
+    title: "Made with care.",
     body: "Every release gets proper production, mixing and artwork.",
   },
   {
-    title: "Heard everywhere",
+    title: "Heard everywhere.",
     body: "Distribution to Spotify, YouTube, Apple Music and every major platform.",
   },
 ];
 
 export default function AboutPage() {
   return (
-    <section className="py-16">
-      <div className="grid items-center gap-12 md:grid-cols-[1.2fr_1fr]">
-        <div>
-          <h1 className="ds-h1">About</h1>
-          <div className="mt-6 max-w-2xl space-y-4 text-lg leading-relaxed text-muted">
-            <p>
-              Studio Shivdev is an independent music label built to give new
-              artists a home: a place to record, release and grow an audience.
-            </p>
-            <p>
-              We work closely with a small roster, from the first demo to the
-              release day, and stay with our artists for the long run.
-            </p>
-          </div>
-        </div>
+    <>
+      {/* The full logo has a white wordmark, so it sits on black. */}
+      <section className="ds-dark ds-tile">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/brand/studio-shivdev-logo.png"
           alt="Studio Shivdev"
           width={1110}
           height={850}
-          className="mx-auto w-full max-w-sm"
+          className="mx-auto w-56 sm:w-72"
         />
-      </div>
+        <h1 className="mt-10 ds-headline">A home for new artists.</h1>
+        <p className="mx-auto mt-4 max-w-2xl ds-lead">
+          Studio Shivdev is an independent music label built to give new artists a
+          place to record, release and grow an audience.
+        </p>
+      </section>
 
-      <div className="mt-14 grid gap-6 sm:grid-cols-3">
+      <section className="ds-tile">
+        <p className="mx-auto max-w-3xl text-[28px] leading-[1.14] font-semibold tracking-[-0.015em] sm:text-[40px] sm:leading-[1.1]">
+          We work closely with a small roster, from the first demo to release day,
+          and stay with our artists for the long run.
+        </p>
+      </section>
+
+      <section className="ds-container grid gap-5 pb-20 sm:grid-cols-3">
         {values.map((v) => (
-          <div
-            key={v.title}
-            className="ds-card"
-          >
-            <h2 className="font-semibold">{v.title}</h2>
-            <p className="mt-2 text-sm text-muted">{v.body}</p>
+          <div key={v.title} className="ds-card">
+            <h2 className="ds-h3">{v.title}</h2>
+            <p className="mt-2 text-muted">{v.body}</p>
           </div>
         ))}
-      </div>
+      </section>
 
-      <div className="mt-14 ds-panel">
-        <h2 className="ds-h2">
-          Making music?
-        </h2>
-        <p className="mt-2 max-w-xl text-muted">
-          We listen to every demo we receive. Send us a link to your music.
+      <section className="ds-tile ds-tile-grey">
+        <h2 className="ds-headline">Making music?</h2>
+        <p className="mx-auto mt-3 max-w-xl ds-subhead text-muted">
+          We listen to every demo we receive.
         </p>
-        <Link
-          href="/contact"
-          className="mt-6 ds-btn-primary"
-        >
-          Get in touch
-        </Link>
-      </div>
-    </section>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+          <Link href="/contact" className="ds-btn-primary">
+            Get in touch
+          </Link>
+          <Link href="/artists" className="ds-link">
+            Meet the artists <Chevron />
+          </Link>
+        </div>
+      </section>
+    </>
   );
 }

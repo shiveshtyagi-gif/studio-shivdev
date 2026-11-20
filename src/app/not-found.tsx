@@ -1,18 +1,14 @@
 import Link from "next/link";
+import { Chevron } from "@/components/Cards";
 
 export default function NotFound() {
   return (
-    <section className="py-28 text-center">
+    <section className="ds-tile py-28">
       <p className="ds-eyebrow">404</p>
-      <h1 className="mt-4 ds-h1 text-3xl">
-        This page isn&apos;t here
-      </h1>
-      <p className="mt-3 text-muted">It may have moved, or the link may be wrong.</p>
-      <Link
-        href="/"
-        className="mt-8 ds-btn-secondary"
-      >
-        Back to home
+      <h1 className="mt-2 ds-headline">This page isn&apos;t here.</h1>
+      <p className="mx-auto mt-3 max-w-md ds-lead">It may have moved, or the link may be wrong.</p>
+      <Link href="/" className="mt-6 ds-link">
+        Back to home <Chevron />
       </Link>
     </section>
   );

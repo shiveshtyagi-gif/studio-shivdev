@@ -30,10 +30,10 @@ export const metadata: Metadata = {
   },
 };
 
-// Black browser bar on phones, to match the site.
+// White browser bar on phones, to match the light pages.
 export const viewport: Viewport = {
-  themeColor: "#000000",
-  colorScheme: "dark",
+  themeColor: "#ffffff",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -50,7 +50,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main
           id="main"
           tabIndex={-1}
-          className="mx-auto w-full max-w-6xl flex-1 px-4 outline-none sm:px-6"
+          className="w-full flex-1 outline-none"
         >
           {children}
         </main>

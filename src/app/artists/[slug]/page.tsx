@@ -8,7 +8,7 @@ import {
   getReleasesByArtist,
   spotifyEmbedUrl,
 } from "@/lib/data";
-import { EmptyState, NewTabHint, ReleaseCard } from "@/components/Cards";
+import { Artwork, EmptyState, NewTabHint, ReleaseCard } from "@/components/Cards";
 
 // Cache Components needs at least one slug to prerender. Until the first
 // artist is added, a placeholder slug prerenders the "not found" page.
@@ -47,74 +47,56 @@ async function ArtistDetails({ params }: Pick<PageProps<"/artists/[slug]">, "par
 
   return (
     <>
-      <div className="grid gap-10 md:grid-cols-[minmax(0,320px)_1fr] md:items-start">
-        {artist.photo_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={artist.photo_url}
-            alt={artist.name}
-            className="aspect-square w-full rounded-2xl object-cover"
-          />
-        ) : (
-          <div
-            aria-hidden
-            className="grid aspect-square w-full place-items-center rounded-2xl bg-gradient-to-br from-surface-2 to-surface text-7xl font-semibold text-muted"
-          >
-            {artist.name.charAt(0)}
+      {/* Hero: centred like a product page */}
+      <section className="ds-tile pb-10">
+        <div className="mx-auto w-40 overflow-hidden rounded-full sm:w-52">
+          <Artwork src={artist.photo_url} alt={artist.name} rounded="rounded-full" eager />
+        </div>
+        <h1 className="mt-6 ds-display">{artist.name}</h1>
+        {artist.bio && (
+          <p className="mx-auto mt-4 max-w-2xl whitespace-pre-line ds-lead">{artist.bio}</p>
+        )}
+        {socials.length > 0 && (
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            {socials.map((s) => (
+              <a key={s.label} href={s.url} target="_blank" rel="noopener" className="ds-chip">
+                {s.label}
+                <NewTabHint />
+              </a>
+            ))}
           </div>
         )}
-        <div>
-          <h1 className="ds-h1 sm:text-5xl">
-            {artist.name}
-          </h1>
-          {artist.bio && (
-            <p className="mt-5 whitespace-pre-line leading-relaxed text-muted">
-              {artist.bio}
-            </p>
-          )}
-          {socials.length > 0 && (
-            <div className="mt-6 flex flex-wrap gap-2">
-              {socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.url}
-                  target="_blank"
-                  rel="noopener"
-                  className="ds-chip"
-                >
-                  {s.label}
-                  <NewTabHint />
-                </a>
-              ))}
-            </div>
-          )}
-          {embed && (
-            <iframe
-              title={`${artist.name} on Spotify`}
-              src={embed}
-              className="mt-8 h-[352px] w-full rounded-xl border-0"
-              loading="lazy"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            />
-          )}
-        </div>
-      </div>
+      </section>
 
-      <section className="mt-16">
-        <h2 className="ds-h2">Releases</h2>
-        <div className="mt-6">
-          {releases.length > 0 ? (
-            <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-              {releases.map((r) => (
-                <ReleaseCard key={r.id} release={r} />
-              ))}
-            </div>
-          ) : (
-            <EmptyState
-              title="New music on the way"
-              body={`${artist.name}'s first Studio Shivdev release is coming soon.`}
-            />
-          )}
+      {embed && (
+        <section className="ds-container pb-12">
+          <iframe
+            title={`${artist.name} on Spotify`}
+            src={embed}
+            className="mx-auto h-[352px] w-full max-w-3xl rounded-[18px] border-0"
+            loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          />
+        </section>
+      )}
+
+      <section className="ds-tile ds-tile-grey text-left">
+        <div className="ds-container">
+          <h2 className="ds-headline">Releases.</h2>
+          <div className="mt-8">
+            {releases.length > 0 ? (
+              <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-4">
+                {releases.map((r) => (
+                  <ReleaseCard key={r.id} release={r} />
+                ))}
+              </div>
+            ) : (
+              <EmptyState
+                title="New music on the way."
+                body={`${artist.name}'s first Studio Shivdev release is coming soon.`}
+              />
+            )}
+          </div>
         </div>
       </section>
     </>
@@ -123,31 +105,28 @@ async function ArtistDetails({ params }: Pick<PageProps<"/artists/[slug]">, "par
 
 /** Placeholder in the shape of the artist page while it loads. */
 function ArtistSkeleton() {
-  const block = "rounded-2xl bg-surface-2 motion-safe:animate-pulse";
+  const block = "bg-surface-2 motion-safe:animate-pulse";
   return (
-    <div role="status" className="grid gap-10 md:grid-cols-[minmax(0,320px)_1fr] md:items-start">
+    <div role="status" className="ds-tile flex flex-col items-center gap-5">
       <span className="sr-only">Loading artist</span>
-      <div aria-hidden className={`aspect-square w-full ${block}`} />
-      <div aria-hidden className="flex flex-col gap-4">
-        <div className={`h-12 w-2/3 ${block}`} />
-        <div className={`h-4 w-full ${block}`} />
-        <div className={`h-4 w-5/6 ${block}`} />
-      </div>
+      <div aria-hidden className={`size-40 rounded-full sm:size-52 ${block}`} />
+      <div aria-hidden className={`h-14 w-2/3 max-w-md rounded-2xl ${block}`} />
+      <div aria-hidden className={`h-5 w-5/6 max-w-xl rounded-full ${block}`} />
     </div>
   );
 }
 
 export default function ArtistPage(props: PageProps<"/artists/[slug]">) {
   return (
-    <section className="py-16">
-      <Link href="/artists" className="ds-tap text-sm text-muted hover:text-accent">
-        ← All artists
-      </Link>
-      <div className="mt-6">
-        <Suspense fallback={<ArtistSkeleton />}>
-          <ArtistDetails params={props.params} />
-        </Suspense>
+    <>
+      <div className="ds-container pt-4">
+        <Link href="/artists" className="ds-link-sm text-[14px]">
+          <span aria-hidden>‹</span> All artists
+        </Link>
       </div>
-    </section>
+      <Suspense fallback={<ArtistSkeleton />}>
+        <ArtistDetails params={props.params} />
+      </Suspense>
+    </>
   );
 }

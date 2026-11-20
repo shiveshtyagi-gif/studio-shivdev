@@ -64,7 +64,7 @@ export default async function DevGallery() {
   ];
 
   return (
-    <section className="py-12">
+    <section className="ds-container py-12">
       <p className="ds-eyebrow">
         For the team
       </p>

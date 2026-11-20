@@ -1,28 +1,48 @@
 /*
- * Studio Shivdev design system — the single source of truth for colours,
- * type and shared components. Documented in DESIGN.md at the project root.
- * Imported once from globals.css. Change a token here and the whole site
- * follows; don't hard-code colours in components.
+ * Studio Shivdev design system — APPLE-STYLE VARIANT (branch apple-style).
+ * Light, airy pages with full-width "tiles", big centred headlines and
+ * chevron links, in Studio Shivdev's red, black and white.
+ * Documented in DESIGN.md. Change a token here and the whole site follows;
+ * don't hard-code colours in components.
  */
 
 /* ---------------------------------------------------------------
  * 1. Tokens
- * Three brand colours only: logo red, black, white. Every grey is
- * white at reduced opacity on black, not an extra colour.
+ * Light by default. Wrap a section in `ds-dark` to switch it to the
+ * black theme (hero and feature tiles). Greys are black (or white, in
+ * dark tiles) at reduced opacity, never another hue.
  * ------------------------------------------------------------- */
 :root {
-  --brand-red: #e91d24;
+  --brand-red: #e91d24; /* the logo red: logo mark and decoration */
   --brand-black: #000000;
   --brand-white: #ffffff;
 
+  --background: var(--brand-white);
+  --foreground: rgb(0 0 0 / 0.88); /* near-black text, 15:1 on white */
+  --muted: rgb(0 0 0 / 0.56); /* secondary text, about 4.9:1 on white */
+  --border: rgb(0 0 0 / 0.12);
+  --surface: rgb(0 0 0 / 0.04); /* light-grey tiles, cards */
+  --surface-2: rgb(0 0 0 / 0.08); /* chips, placeholders */
+  /* Links and buttons on white use a slightly deeper red so small text
+   * passes contrast (5.5:1 on white). The logo keeps --brand-red. */
+  --accent: #d0161d;
+  --accent-ink: var(--brand-white); /* text on red fills */
+  /* Button fills: the deeper red in every theme, so white button text
+   * stays at 5.5:1. */
+  --accent-fill: #d0161d;
+}
+
+.ds-dark {
   --background: var(--brand-black);
   --foreground: var(--brand-white);
-  --accent: var(--brand-red);
-  --accent-ink: var(--brand-white); /* text on red */
-  --muted: rgb(255 255 255 / 0.68); /* secondary text */
-  --border: rgb(255 255 255 / 0.14); /* hairlines, card borders */
-  --surface: rgb(255 255 255 / 0.05); /* cards, inputs */
-  --surface-2: rgb(255 255 255 / 0.1); /* raised panels, placeholders */
+  --muted: rgb(255 255 255 / 0.68);
+  --border: rgb(255 255 255 / 0.16);
+  --surface: rgb(255 255 255 / 0.06);
+  --surface-2: rgb(255 255 255 / 0.12);
+  --accent: var(--brand-red); /* 4.7:1 on black */
+  background: var(--background);
+  color: var(--foreground);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -30,11 +50,14 @@
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
+  --color-accent-fill: var(--accent-fill);
+  --color-brand-red: var(--brand-red);
   --color-muted: var(--muted);
   --color-line: var(--border);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
-  --font-sans: var(--font-geist-sans);
+  /* System font first: Apple devices show their own system face. */
+  --font-sans: -apple-system, BlinkMacSystemFont, var(--font-geist-sans), "Segoe UI", system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
@@ -42,12 +65,15 @@
  * 2. Base
  * ------------------------------------------------------------- */
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  font-size: 17px;
+  line-height: 1.47;
+  letter-spacing: -0.022em;
 }
 
 ::selection {
@@ -55,14 +81,12 @@ body {
   color: var(--accent-ink);
 }
 
-/* Keyboard focus: a solid 2px white ring with a gap, on every control.
- * White on black is 21:1, and the gap keeps it clear of red fills. */
+/* Keyboard focus: solid 2px ring in the text colour, with a gap. */
 :focus-visible {
   outline: 2px solid var(--foreground);
   outline-offset: 3px;
 }
 
-/* Screen-reader-only text that appears when focused (skip link). */
 .ds-skip {
   position: absolute;
   left: 1rem;
@@ -73,7 +97,7 @@ body {
   color: var(--background);
   padding: 0.75rem 1.25rem;
   font-size: 0.875rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 .ds-skip:focus {
   top: 1rem;
@@ -81,78 +105,111 @@ body {
 
 /* ---------------------------------------------------------------
  * 3. Components (prefix ds-). Combine with layout utilities such as
- *    mt-6 or self-start, never with colour or type utilities.
+ *    mt-6, never with colour or type utilities.
  * ------------------------------------------------------------- */
 @layer components {
+  /* Layout */
+  .ds-container {
+    @apply mx-auto w-full max-w-[1068px] px-5 sm:px-6;
+  }
+  /* Full-width section with centred content, like a product tile. */
+  .ds-tile {
+    @apply overflow-hidden px-5 pt-14 pb-14 text-center sm:px-6 sm:pt-20 sm:pb-20;
+  }
+  .ds-tile-grey {
+    @apply bg-surface;
+  }
+
   /* Type */
   .ds-eyebrow {
-    @apply text-sm font-bold uppercase tracking-[0.3em] text-accent;
+    @apply text-[17px] font-semibold text-accent sm:text-[21px];
   }
   .ds-display {
-    @apply text-5xl leading-[0.95] font-black uppercase tracking-tight sm:text-7xl;
+    @apply text-[48px] leading-[1.05] font-semibold tracking-[-0.015em] sm:text-[80px];
+  }
+  .ds-headline {
+    @apply text-[40px] leading-[1.1] font-semibold tracking-[-0.015em] sm:text-[56px] sm:leading-[1.07];
+  }
+  .ds-subhead {
+    @apply text-[21px] leading-[1.19] font-normal sm:text-[28px] sm:leading-[1.14];
   }
   .ds-h1 {
-    @apply text-4xl font-black uppercase tracking-tight;
+    @apply text-[40px] leading-[1.1] font-semibold tracking-[-0.015em] sm:text-[48px] sm:leading-[1.08];
   }
   .ds-h2 {
-    @apply text-2xl font-black uppercase tracking-tight;
+    @apply text-[28px] leading-[1.14] font-semibold tracking-[-0.015em] sm:text-[32px] sm:leading-[1.125];
   }
   .ds-h3 {
-    @apply text-xl font-black uppercase tracking-tight;
+    @apply text-[21px] leading-[1.19] font-semibold;
   }
   .ds-lead {
-    @apply text-lg text-muted;
+    @apply text-[19px] leading-[1.42] text-muted sm:text-[21px] sm:leading-[1.38];
   }
 
-  /* Buttons: pill-shaped like the logo's bars */
+  /* Chevron link: "Listen ›" */
+  .ds-link {
+    @apply inline-flex min-h-11 items-center gap-1 text-[17px] text-accent hover:underline sm:text-[21px];
+  }
+  .ds-link-sm {
+    @apply inline-flex min-h-11 items-center gap-1 text-[17px] text-accent hover:underline;
+  }
+
+  /* Buttons: rounded pills */
   .ds-btn-primary,
   .ds-btn-secondary {
-    @apply inline-block rounded-full px-6 py-3 text-sm font-bold uppercase tracking-wider transition-colors disabled:opacity-60;
+    @apply inline-flex min-h-11 items-center justify-center rounded-full px-[22px] text-[17px] transition-colors disabled:opacity-60;
   }
   .ds-btn-primary {
-    @apply bg-accent text-accent-ink hover:bg-foreground hover:text-background;
+    @apply bg-accent-fill text-accent-ink hover:bg-foreground hover:text-background;
   }
   .ds-btn-secondary {
-    @apply border-2 border-foreground hover:border-accent hover:text-accent;
+    @apply border border-accent text-accent hover:bg-accent-fill hover:border-accent-fill hover:text-accent-ink;
   }
 
-  /* Chips: small pill links (filters, socials, jump links) */
+  /* Chips: small grey pills (socials, jump links) */
   .ds-chip {
-    @apply inline-flex min-h-11 items-center gap-1 rounded-full border border-line px-4 text-sm transition-colors hover:border-accent hover:text-accent;
+    @apply inline-flex min-h-11 items-center gap-1 rounded-full bg-surface-2 px-4 text-[14px] transition-colors hover:bg-foreground hover:text-background;
   }
 
-  /* Text links in nav and "All releases →": 44px tall tap area,
-   * same look as plain text. */
+  /* 44px tap area for plain text links */
   .ds-tap {
     @apply inline-flex min-h-11 items-center;
   }
 
   /* Surfaces */
   .ds-card {
-    @apply rounded-2xl border border-line bg-surface p-6;
+    @apply rounded-[18px] bg-surface p-7;
   }
   .ds-panel {
-    @apply rounded-2xl bg-surface-2 p-8;
+    @apply rounded-[28px] bg-surface px-6 py-12 text-center sm:px-12;
+  }
+
+  /* Horizontal card scroller (swipe on phones) */
+  .ds-scroller {
+    @apply -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-6 sm:-mx-6 sm:px-6;
+    scroll-padding-inline: 1.25rem;
+    scrollbar-width: none;
+  }
+  .ds-scroller::-webkit-scrollbar {
+    display: none;
   }
 
   /* Form fields */
   .ds-input {
-    @apply w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-foreground placeholder:text-muted focus:border-accent aria-invalid:border-accent;
+    @apply w-full rounded-xl border border-line bg-background px-4 py-3 text-[17px] text-foreground placeholder:text-muted focus:border-accent aria-invalid:border-accent;
   }
   .ds-field-error {
-    @apply text-sm text-accent;
+    @apply text-[14px] text-accent;
   }
 }
 
 /* ---------------------------------------------------------------
  * 4. Motion
  * ------------------------------------------------------------- */
-/* Gentle "playing" motion for the large waveform (LogoMark animated). */
 .wave-bar {
   transform-box: fill-box;
   transform-origin: center;
-  /* 3 swings (about 7s), ending at full height, then it rests: moving
-   * content must stop on its own or offer a pause (WCAG 2.2.2). */
+  /* 3 swings (about 7s), then it rests (WCAG 2.2.2). */
   animation: wave 2.4s ease-in-out 3 alternate;
 }
 
@@ -162,6 +219,23 @@ body {
   }
   to {
     transform: scaleY(1);
+  }
+}
+
+/* Tiles fade up gently as they load (not on reduced motion). */
+@media (prefers-reduced-motion: no-preference) {
+  .ds-rise {
+    animation: rise 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0.001;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 

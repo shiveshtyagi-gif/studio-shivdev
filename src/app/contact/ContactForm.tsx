@@ -26,7 +26,7 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <div ref={statusRef} tabIndex={-1} role="status" className="ds-card p-8">
+      <div ref={statusRef} tabIndex={-1} role="status" className="rounded-[18px] bg-background p-8 text-center">
         <p className="text-lg font-semibold">Thanks, your message is in.</p>
         <p className="mt-2 text-muted">We read every message and will get back to you.</p>
       </div>
