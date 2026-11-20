@@ -214,6 +214,13 @@ body {
   animation-delay: var(--wave-delay, 0s);
 }
 
+/* Header logo: loops forever, by the owner's choice (no pause control).
+ * Note: this departs from WCAG 2.2.2 (Pause, Stop, Hide). Reduce motion
+ * still turns it off, via the rule at the end of this file. */
+.ds-logo-link .wave-bar {
+  animation-iteration-count: infinite;
+}
+
 /* Header logo: on hover or keyboard focus, a quick left-to-right ripple
  * runs through the bars once, then they settle at full height. */
 @media (prefers-reduced-motion: no-preference) {
