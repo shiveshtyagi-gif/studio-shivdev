@@ -1,14 +1,18 @@
 import Link from "next/link";
-import { NAV_LINKS } from "@/lib/nav";
+import { CONTACT_EMAIL, NAV_LINKS } from "@/lib/nav";
 
 /** Quiet grey footer with small type, like a product site's footer. */
 export function SiteFooter() {
   return (
-    <footer className="bg-surface text-[12px] leading-[1.33] text-muted">
+    <footer className="border-t border-line bg-surface text-[12px] leading-[1.33] text-muted">
       <div className="ds-container py-10">
         <p className="border-b border-line pb-4">
           Studio Shivdev is an independent music label. Listen to our releases on
-          Spotify, YouTube and Apple Music.
+          Spotify, YouTube and Apple Music. Email us at{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`} className="text-foreground/80 underline-offset-2 hover:underline">
+            {CONTACT_EMAIL}
+          </a>
+          .
         </p>
         <div className="flex flex-col gap-2 pt-4 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Studio Shivdev. All rights reserved.</p>

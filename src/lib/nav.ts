@@ -5,3 +5,6 @@ export const NAV_LINKS = [
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
+
+// The label's public email address (GoDaddy Professional Email).
+export const CONTACT_EMAIL = "connect@studioshivdev.com";

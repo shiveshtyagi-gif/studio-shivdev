@@ -1,6 +1,6 @@
 # Studio Shivdev design system
 
-> **This is the `apple-style` branch: an alternative design, not live on studioshivdev.com.**
+> **The live site now uses the Apple-style design** (merged from the `apple-style` branch on 21 November 2026).
 > It keeps the brand (logo, red/black/white) but uses a light, product-site layout:
 >
 > - **Pages:** white pages, with black `ds-dark` and light-grey `ds-tile-grey` full-width tiles.
@@ -8,10 +8,11 @@
 > - **Links and buttons:** chevron links (`ds-link`, "Listen ›") and rounded pill buttons.
 > - **Navigation:** a thin 48px translucent nav with small links, and a large-type phone menu.
 > - **Components:** rounded cards (18px for covers, 28px for artists) and a swipeable artist row (`ds-scroller`).
-> - **Footer:** a quiet grey footer in 12px type.
+> - **Footer:** a quiet grey footer in 12px type, with a hairline on top and the email address.
+> - **Email:** the public address is `connect@studioshivdev.com` (`CONTACT_EMAIL` in `src/lib/nav.ts`). It appears as a mailto link on the Contact page and in the footer.
 > - **Colour tokens:** text is near-black (black at 88%), and greys are black at reduced opacity. Links and buttons on white use a slightly deeper red, `#d0161d` (5.5:1), so small text passes contrast. Button fills use it in every theme (`--accent-fill`); the logo mark stays the exact logo red.
 >
-> The sections below describe the dark design on `main`. On this branch, `src/app/design-system.css` is the source of truth.
+> The sections below describe the earlier dark design (git commit `79b2196`) and are kept for reference. Where they disagree with the summary above, follow the summary and `src/app/design-system.css`.
 
 The Studio Shivdev website uses three colours (logo red, black and white), heavy uppercase type taken from the wordmark, and pill shapes taken from the waveform logo.
 
