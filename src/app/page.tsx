@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getArtists, getReleases, releaseTypeLabel, type Release } from "@/lib/data";
 import { Artwork, ArtistCard, Chevron, EmptyState, platformsOf } from "@/components/Cards";
-import { LogoMark } from "@/components/LogoMark";
+import { PremiereHero } from "@/components/PremiereHero";
 
 /** Links under a featured release: "Listen on … ›" plus a link to the artist. */
 function ReleaseLinks({ release, size = "lg" }: { release: Release; size?: "lg" | "sm" }) {
@@ -36,23 +36,8 @@ export default async function Home() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="ds-dark ds-tile">
-        <div className="ds-rise">
-          <p className="ds-eyebrow">Independent music label</p>
-          <h1 className="mt-2 ds-display">Studio Shivdev.</h1>
-          <p className="mt-3 ds-subhead text-muted">New sounds from independent artists.</p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-            <Link href="/releases" className="ds-btn-primary">
-              Listen to releases
-            </Link>
-            <Link href="/contact" className="ds-link">
-              Send us your music <Chevron />
-            </Link>
-          </div>
-        </div>
-        <LogoMark animated className="mx-auto mt-14 w-64 sm:mt-20 sm:w-[520px]" />
-      </section>
+      {/* Hero: the latest release premiere */}
+      <PremiereHero />
 
       {/* Featured release */}
       {featured ? (
