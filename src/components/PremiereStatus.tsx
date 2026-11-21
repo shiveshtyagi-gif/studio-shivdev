@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 /** Same as NewTabHint in Cards.tsx, which can't be imported here (server-only data). */
 function NewTabHint() {
@@ -12,28 +12,72 @@ function NewTabHint() {
   );
 }
 
-/** Ticks every 15 seconds, so the countdown stays current. */
+/** Ticks every second, so the flip clock stays in step with the real clock. */
 function subscribe(onChange: () => void) {
-  const id = setInterval(onChange, 15_000);
+  const id = setInterval(onChange, 1000);
   return () => clearInterval(id);
 }
-const getNow = () => Math.floor(Date.now() / 15_000) * 15_000;
+const getNow = () => Math.floor(Date.now() / 1000) * 1000;
 const getServerNow = () => null;
 
-function countdown(ms: number) {
-  const mins = Math.ceil(ms / 60_000);
-  const h = Math.floor(mins / 60);
-  const m = mins % 60;
-  return h > 0 ? `${h}h ${m}m` : `${m} min`;
-}
+const pad = (n: number) => String(n).padStart(2, "0");
 
 function isSameDay(a: Date, b: Date) {
   return a.toDateString() === b.toDateString();
 }
 
 /**
- * Live premiere line and the call-to-action button. The server sends the
- * fixed date; the browser then swaps in "today", a countdown, or "Out now".
+ * One split-flap card with two digits. When the value changes, the top half
+ * of the old number folds down and the bottom half of the new one drops in.
+ * Skips the fold when the visitor prefers reduced motion.
+ */
+function FlipUnit({ value, label, urgent }: { value: string | null; label: string; urgent: boolean }) {
+  const shown = value ?? "––";
+  const [state, setState] = useState({ cur: shown, prev: shown, flipping: false });
+
+  // Adjust state while rendering: the standard way to react to a changed prop.
+  if (shown !== state.cur) {
+    const reduce = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setState({ cur: shown, prev: state.cur, flipping: !reduce });
+  }
+
+  const bottom = state.flipping ? state.prev : state.cur;
+
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <div className="ds-flip" data-urgent={urgent || undefined} aria-hidden>
+        <div className="ds-flip-half ds-flip-top">
+          <span>{state.cur}</span>
+        </div>
+        <div className="ds-flip-half ds-flip-bottom">
+          <span>{bottom}</span>
+        </div>
+        {state.flipping && (
+          <>
+            <div key={`t-${state.cur}`} className="ds-flip-half ds-flip-top ds-flip-fold">
+              <span>{state.prev}</span>
+            </div>
+            <div
+              key={`b-${state.cur}`}
+              className="ds-flip-half ds-flip-bottom ds-flip-drop"
+              onAnimationEnd={() => setState((s) => ({ ...s, flipping: false }))}
+            >
+              <span>{state.cur}</span>
+            </div>
+          </>
+        )}
+      </div>
+      <span className="text-[11px] font-semibold tracking-[0.18em] text-muted uppercase sm:text-[12px]">
+        {label}
+      </span>
+    </div>
+  );
+}
+
+/**
+ * Live premiere clock and the call-to-action button. The server sends the
+ * fixed date and empty cards; the browser then starts the flip clock, and
+ * swaps to "Out now" once the premiere time has passed.
  */
 export function PremiereStatus({
   startsAt,
@@ -46,15 +90,32 @@ export function PremiereStatus({
 }) {
   const now = useSyncExternalStore(subscribe, getNow, getServerNow);
   const start = new Date(startsAt);
-  const live = now !== null && now >= start.getTime();
+  const remaining = now === null ? null : start.getTime() - now;
+  const live = remaining !== null && remaining <= 0;
+  const secs = remaining === null ? null : Math.max(0, Math.floor(remaining / 1000));
 
-  let status = `Premieres on YouTube · ${startsAtLabel}`;
-  if (now !== null) {
-    const time = start.toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: true });
-    if (live) status = "Out now on YouTube";
-    else if (isSameDay(start, new Date(now)))
-      status = `Premieres today at ${time} · in ${countdown(start.getTime() - now)}`;
+  let caption = `Premieres on YouTube · ${startsAtLabel}`;
+  if (live) caption = "Out now on YouTube";
+  else if (secs !== null) {
+    if (secs <= 60) caption = "Going live any second";
+    else if (secs <= 600) caption = "Almost time";
+    else if (secs <= 3600) caption = "Starting soon";
+    else if (isSameDay(start, new Date(now!))) {
+      const time = start.toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: true });
+      caption = `Premieres today at ${time}`;
+    }
   }
+
+  const days = secs === null ? null : Math.floor(secs / 86400);
+  const units: { label: string; value: string | null }[] = [];
+  if (days !== null && days > 0) units.push({ label: "Days", value: pad(days) });
+  units.push(
+    { label: "Hours", value: secs === null ? null : pad(Math.floor((secs % 86400) / 3600)) },
+    { label: "Minutes", value: secs === null ? null : pad(Math.floor((secs % 3600) / 60)) },
+    { label: "Seconds", value: secs === null ? null : pad(secs % 60) },
+  );
+
+  const minutesLeft = secs === null ? null : Math.ceil(secs / 60);
 
   return (
     <>
@@ -63,9 +124,24 @@ export function PremiereStatus({
           <span className="absolute inset-0 animate-ping rounded-full bg-brand-red opacity-75 motion-reduce:hidden" />
           <span className="relative size-2.5 rounded-full bg-brand-red" />
         </span>
-        <span aria-live="polite">{status}</span>
+        <span aria-live="polite">{caption}</span>
       </p>
-      <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+
+      {!live && (
+        <div className="mt-8 sm:mt-10">
+          <div role="timer" className="flex items-start justify-center gap-3 sm:gap-5">
+            {units.map((u) => (
+              <FlipUnit key={u.label} label={u.label} value={u.value} urgent={secs !== null && secs <= 60} />
+            ))}
+          </div>
+          {/* Read out once a minute, not every second. */}
+          <span className="sr-only">
+            {minutesLeft === null ? "Counting down to the premiere" : `About ${minutesLeft} minutes until the premiere`}
+          </span>
+        </div>
+      )}
+
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
         <a href={url} target="_blank" rel="noopener" className="ds-btn-primary gap-2">
           <YouTubeGlyph />
           {live ? "Watch now on YouTube" : "Set a reminder on YouTube"}

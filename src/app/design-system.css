@@ -250,6 +250,97 @@ body {
   }
 }
 
+/* Split-flap clock (premiere countdown). Each .ds-flip is one two-digit
+ * card; the top and bottom halves clip the same big number, and on a change
+ * the old top folds down while the new bottom drops in. Sizes scale with the
+ * card's own width (cqw), so one set of numbers works from phone to desktop. */
+.ds-flip {
+  --flip-bg: color-mix(in srgb, var(--foreground) 7%, var(--background));
+  --flip-ink: color-mix(in srgb, var(--foreground) 80%, var(--background));
+  position: relative;
+  container-type: inline-size;
+  width: clamp(88px, 27vw, 176px);
+  aspect-ratio: 1 / 1.12;
+  perspective: 900px;
+  border-radius: 14cqw;
+}
+.ds-flip-half {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+  background: var(--flip-bg);
+  backface-visibility: hidden;
+}
+.ds-flip-top {
+  top: 0;
+  border-radius: 14cqw 14cqw 0 0;
+  transform-origin: bottom;
+}
+.ds-flip-bottom {
+  bottom: 0;
+  border-radius: 0 0 14cqw 14cqw;
+  transform-origin: top;
+}
+.ds-flip-half > span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200%;
+  font-family: var(--font-flip), var(--font-sans);
+  font-size: 66cqw;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--flip-ink);
+}
+.ds-flip-top > span {
+  top: 0;
+}
+.ds-flip-bottom > span {
+  bottom: 0;
+}
+/* The hinge: a thin gap across the middle of every card. */
+.ds-flip::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% - 1.5px);
+  height: 3px;
+  background: var(--background);
+  z-index: 5;
+}
+/* The last minute: digits turn logo red. */
+.ds-flip[data-urgent] {
+  --flip-ink: var(--brand-red);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ds-flip-fold {
+    z-index: 3;
+    animation: flip-fold 260ms ease-in forwards;
+  }
+  .ds-flip-drop {
+    z-index: 3;
+    transform: rotateX(90deg);
+    animation: flip-drop 260ms ease-out 260ms forwards;
+  }
+}
+@keyframes flip-fold {
+  to {
+    transform: rotateX(-90deg);
+  }
+}
+@keyframes flip-drop {
+  to {
+    transform: rotateX(0);
+  }
+}
+
 /* Tiles fade up gently as they load (not on reduced motion). */
 @media (prefers-reduced-motion: no-preference) {
   .ds-rise {
