@@ -7,9 +7,9 @@ export const premiere = {
   title: "Betrayal",
   youtubeUrl: "https://youtu.be/7OlT32oFlhU",
   /** Premiere time on YouTube, with its time-zone offset (IST). */
-  startsAt: "2026-11-21T17:50:00+05:30",
+  startsAt: "2026-11-21T17:30:00+05:30",
   /** What the static page says before the browser can work out "today". */
-  startsAtLabel: "21 November, 5:50 PM IST",
+  startsAtLabel: "21 November, 5:30 PM IST",
   poster: {
     large: "/releases/betrayal-poster-1920.jpg",
     small: "/releases/betrayal-poster-960.jpg",
