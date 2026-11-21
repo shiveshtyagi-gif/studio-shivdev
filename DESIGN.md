@@ -1,5 +1,7 @@
 # Studio Shivdev design system
 
+> **Hero-only mode is on:** the live site currently shows just the home page's premiere hero. Every other page redirects to `/`, and the header and footer hide their page links (the email address stays). Nothing was deleted: set `HERO_ONLY` to `false` in `src/lib/site.ts` and push to bring everything back.
+>
 > **The live site now uses the Apple-style design** (merged from the `apple-style` branch on 21 November 2026).
 > It keeps the brand (logo, red/black/white) but uses a light, product-site layout:
 >

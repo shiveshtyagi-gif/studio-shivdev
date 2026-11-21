@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { LogoMark } from "@/components/LogoMark";
 import { HeaderNav, HeaderNavLive } from "@/components/SiteNav";
+import { HERO_ONLY } from "@/lib/site";
 
 /** Thin, translucent global nav bar: logo mark on the left, links on the right. */
 export function SiteHeader() {
@@ -16,9 +17,12 @@ export function SiteHeader() {
             build aren't known when the site is built, so the nav renders without
             a current page until the URL is read (Cache Components needs a
             Suspense boundary here). */}
-        <Suspense fallback={<HeaderNav pathname={null} />}>
-          <HeaderNavLive />
-        </Suspense>
+        {/* Hero-only mode (src/lib/site.ts): no page links while the other pages are off. */}
+        {!HERO_ONLY && (
+          <Suspense fallback={<HeaderNav pathname={null} />}>
+            <HeaderNavLive />
+          </Suspense>
+        )}
       </div>
     </header>
   );

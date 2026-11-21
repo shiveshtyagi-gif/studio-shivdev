@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getArtists, getReleases, releaseTypeLabel, type Release } from "@/lib/data";
 import { Artwork, ArtistCard, Chevron, EmptyState, platformsOf } from "@/components/Cards";
 import { PremiereHero } from "@/components/PremiereHero";
+import { HERO_ONLY } from "@/lib/site";
 
 /** Links under a featured release: "Listen on … ›" plus a link to the artist. */
 function ReleaseLinks({ release, size = "lg" }: { release: Release; size?: "lg" | "sm" }) {
@@ -31,6 +32,10 @@ function kindOf(release: Release) {
 }
 
 export default async function Home() {
+  // Hero-only mode (src/lib/site.ts): show just the premiere hero and skip
+  // everything below it, including its database reads.
+  if (HERO_ONLY) return <PremiereHero />;
+
   const [releases, artists] = await Promise.all([getReleases(3), getArtists()]);
   const [featured, ...rest] = releases;
 
