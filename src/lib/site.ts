@@ -6,7 +6,7 @@
  * Nothing is deleted. To bring the whole site back, set this to false and
  * push; the artists, releases, about and contact pages work again.
  */
-export const HERO_ONLY = true;
+export const HERO_ONLY = false;
 
 /** The pages that redirect home in hero-only mode (used by next.config.ts). */
 export const HERO_ONLY_REDIRECTS = [
