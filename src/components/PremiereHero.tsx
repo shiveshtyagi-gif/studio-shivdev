@@ -17,8 +17,8 @@ export function PremiereHero() {
         <h1 className="mt-2 ds-display">{title}.</h1>
         <p className="mx-auto mt-3 max-w-2xl ds-subhead">Some wounds don&rsquo;t make a sound.</p>
         <p className="mx-auto mt-4 max-w-xl ds-lead">
-          Studio Shivdev presents a story of love, trust and the person who breaks it. Watch the
-          world premiere on YouTube and be there the moment it drops.
+          Studio Shivdev presents a story of love, trust and the person who breaks it. The music
+          video is out now. Watch {title} on YouTube.
         </p>
         <PremiereStatus startsAt={startsAt} startsAtLabel={startsAtLabel} url={youtubeUrl} />
       </div>
