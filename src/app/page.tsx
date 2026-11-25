@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getArtists, getReleases, releaseTypeLabel, type Release } from "@/lib/data";
 import { Artwork, ArtistCard, Chevron, EmptyState, platformsOf } from "@/components/Cards";
+import { HeroCarousel } from "@/components/HeroCarousel";
 import { PremiereHero } from "@/components/PremiereHero";
 import { HERO_ONLY } from "@/lib/site";
 
@@ -41,8 +42,8 @@ export default async function Home() {
 
   return (
     <>
-      {/* Hero: the latest release premiere */}
-      <PremiereHero />
+      {/* Hero: four slides looping every 5 seconds */}
+      <HeroCarousel />
 
       {/* Featured release */}
       {featured ? (
